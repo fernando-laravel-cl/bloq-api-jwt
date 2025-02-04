@@ -4,7 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends Controller
 {
@@ -29,8 +30,8 @@ class LoginController extends Controller
 
          try {
              // Intentamos autenticar con esos datos
-             if (! $token = auth()->attempt($credentials)) {
-                 return response()->json(['error' => 'Unauthorized'], 401);
+             if (! $token = auth(guard: 'api')->attempt($credentials)) {
+                 return response()->json(['error' => 'Unauthorized 1'], 401);
              }
          } catch (JWTException $e) {
              // Si ocurre un problema al crear el token
